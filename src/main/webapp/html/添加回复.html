@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加回复</title>
+    <style>
+        .content{
+            width: 600px;
+            height: 300px;
+            margin: 0 auto;
+        }
+        #content{
+            width: 600px;
+            height: 300px;
+        }
+        #name{
+            width: 200px;
+            height: 40px;
+            font-size: 25px;
+        }
+
+    </style>
+    <script src="../jquery/jquery.js"></script>
+</head>
+<body>
+   <div class="content">
+   <form>
+       回复内容：<textarea type="text" name="content" placeholder="请输入回复内容"  id="content"></textarea>
+       <br>
+       回复昵称：
+       <br><input type="text" name="replay_author" placeholder="请输入姓名" id="name">
+       <br>
+       <!--<input type="button" value="提交" >-->
+       <button id="submit" type="button">提交</button>
+       <input type="reset" value="返回">
+
+   </form>
+   </div>
+</body>
+<script>
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return r[2];
+        return null;
+    }
+
+
+    $("#submit").click(function () {
+        var content = $("#content").val()
+        var name = $("#name").val()
+        var valid = getQueryString("id")
+        if ($("#content").val()==0) {
+            alert("请输入信息")
+        }else {
+            if ($("#name").val()==0){
+                alert("请输入姓名")
+            }else {
+                console.log(11111)
+                $.ajax({
+                    url: "/Replay/AddReplay.show",
+                    data: {"content": content, "name": name, "valid": valid},
+                    type: "get",
+                    dataType: "json",
+                    success: function (json) {
+                        console.log(json)
+                        if (json.ok==1){
+                            alert("添加成功")
+                            window.location.href="/html/%E5%9B%9E%E5%A4%8D%E9%A1%B5%E9%9D%A2.html?id="+valid
+                        }else {
+                            alert("添加失败")
+                        }
+
+                    }
+                })
+            }
+        }
+
+
+
+
+
+    })
+
+
+
+</script>
+</html>

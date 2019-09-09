@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小米商城</title>
+    <script src="../jquery/jquery.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            background-color: #F9F9F9;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .nav{
+            height: 40px;
+            background-color: #333;
+        }
+        .nav_content{
+            width: 1226px;
+            margin: 0 auto;
+        }
+        .nav_content .nav_content_left li{
+            list-style: none;
+            float: left;
+            margin: 10px 3px;
+            color: #b0b0b0;
+            font-size: 10px;
+        }
+        .nav_content a:hover{
+            color: white;
+        }
+        .nav_content .nav_content_right li{
+            list-style: none;
+            float: right;
+            margin: 10px 3px;
+            color: #b0b0b0;
+            font-size: 10px;
+        }
+        a{
+            text-decoration: none;
+            color: #b0b0b0;
+        }
+        .site-header{
+            width: 1226px;
+            /*border: 1px red solid;*/
+            margin: 20px auto;
+            height: 100px;
+            /*padding: 10px 0px;*/
+            line-height: 100px;
+            font-size: 20px;
+        }
+        .site-header span{
+            margin: 15px;
+        }
+        .site-header input{
+            height: 50px;
+        }
+        .site-header img{
+            vertical-align: middle;
+
+        }
+        .content{
+            left: 345px;
+            /*position: absolute;*/
+            background-image: url("img/1l.jpg");
+            /*background-color: #333;*/
+            /*clear: both;*/
+            width: 1226px;
+            height: 469px;
+            /*border: 1px red solid;*/
+            margin: 30px auto;
+            background-size:1226px 469px;
+        }
+        .content_left{
+           float: left;
+
+
+        }
+        /*.content_left_content{*/
+            /*background-color: #333;*/
+            /*!*margin-left: 30px;*!*/
+            /*width: 234px;*/
+            /*padding: 25px;*/
+        /*}*/
+        .content_left .content_left_content li{
+
+            width: 234px;
+            background-color: #333;
+            list-style: none;
+            padding: 13px 25px;
+        }
+        .content_left_content_right{
+
+            /*width: 200px;*/
+            /*height: 220px;*/
+            /*border: 1px red solid;*/
+        }
+        .content_right{
+            float: right;
+            width: 320px;
+            height: 460px;
+            /*border: 1px red solid;*/
+        }
+        .content_right .content_right_bottom li{
+
+            display: inline-block;
+            list-style: none;
+            font-size: 40px;
+            color: gray;
+            /*background-color: white;*/
+            /*color: white;*/
+
+
+        }
+        .content_right .content_right_bottom li:hover{
+                       color: white;
+        }
+        .content_right_top{
+            width: 300px;
+            height: 430px;
+            /*border: 1px red solid;*/
+        }
+        .content_right_bottom{
+            text-align: center;
+            width: 300px;
+            /*border: 1px red solid;*/
+
+        }
+        .hide{
+            /*left: 284px;*/
+            /*width: 800px;*/
+            height: 469px;
+            /*border: 1px #E0DFDF solid;*/
+            display: none;
+            background-color: white;
+            /*position: absolute;*/
+            z-index: 100;
+            opacity: 0.9;
+
+        }
+        .button{
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            border: 3px #8A8888 solid;
+            list-style: none;
+            background-color: #787777;
+            display: inline-block;
+            outline: none;
+        }
+
+        .hide_sub{
+            width: 200px;
+            height: 55px;
+            border: 1px #E0DFDF solid;
+            line-height: 40px;
+            /*padding-top: 10px;*/
+            float: left;
+            margin: 10px;
+
+        }
+        .hide_sub img{
+            vertical-align: middle;
+        }
+        .hide_subl{
+            float: left;
+            width: 230px;
+            height: 470px;
+            /*border: 1px red solid;*/
+        }
+        .box_sub{
+            width: 1226px;
+            height: 728px;
+            /*border: 1px red solid;*/
+            margin: 20px auto;
+
+        }
+        .box_sub1_title{
+            height: 20px;
+            /*border: 1px red solid;*/
+            padding: 20px;
+
+        }
+
+        .box_sub1_content_right{
+            height: 641px;
+            width: 1220px;
+            /*border: 1px black solid;*/
+            float: left;
+        }
+        .box_sub1_content_right .item{
+            width: 220px;
+            height: 300px;
+            /*border: 1px black solid;*/
+            float: left;
+            margin: 10px;
+            text-align: center;
+        }
+        .box_sub1_title button{
+            width: 30px;
+            height: 30px;
+            font-size: 25px;
+            border: 1px #E0E0E0 solid;
+            background-color: #F5F5F5;
+            color: #E0E0E0;
+        }
+        .recommend{
+            width: 1226px;
+            height: 320px;
+            background-color: #F9F9F9;
+            /*border: 1px red solid;*/
+        }
+        .recommend_item{
+            width: 220px;
+            height: 300px;
+            /*border: 1px black solid;*/
+            float: left;
+            margin: 10px;
+            text-align: center;
+            background-color: white;
+        }
+        .item_top{
+            width: 200px;
+            height: 100px;
+            /*border: 1px red solid;*/
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .item{
+            background-color: white;
+        }
+        .site-header-drop{
+            width: 1980px;
+            position: absolute;
+            top: 145px;
+            height: 0px;
+            border: 1px #EEEEEE solid;
+            background-color: white;
+            transition:1s;
+            overflow: hidden;
+
+
+        }
+        #c:hover .site-header-drop{
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+   <div class="nav">
+      <div class="nav_content">
+
+          <ul class="nav_content_left">
+              <li><a href=""> 小米商城 </a>|</li>
+              <li><a href=""> MIUI  </a>|</li>
+              <li><a href=""> LOT </a> |</li>
+              <li><a href=""> 云服务 </a> |</li>
+              <li><a href=""> 金融 </a> |</li>
+              <li><a href=""> 有品 </a> |</li>
+              <li><a href=""> 小爱开放品台 </a> |</li>
+              <li><a href=""> 企业团购 </a> |</li>
+              <li><a href=""> 资质证照 </a> |</li>
+              <li><a href=""> 协议规则 </a> |</li>
+              <li><a href=""> 下载app </a> |</li>
+              <li><a href=""> select Region </a> |</li>
+              <li></li>
+          </ul>
+          <ul class="nav_content_right">
+              <li><a href="">购物车</a></li>
+              <li><a href="">消息通知</a></li>
+              <li><a href="http://localhost:13082/XiaoMi/html/register.html">注册</a></li>
+              <li><a href="http://localhost:13082/XiaoMi/html/login.html">登录</a></li>
+          </ul>
+      </div>
+   </div>
+   <div class="site-header"  id="c">
+      <img src="img/1.jpg" >
+       <span><a href="#" >小米手机</a></span>
+       <a href="#"><span>Redmi红米手机</span></a>
+       <a href="#"><span>电视</span></a>
+       <a href="#"><span>笔记本</span></a>
+       <a href="#"><span>家电</span></a>
+       <a href="#"><span>路由器</span></a>
+       <a href="#"><span>智能硬件</span></a>
+       <a href="#"><span>服务</span></a>
+       <a href="#"><span>社区</span></a>
+       <input style="width: 200px" class="search-text" type="search" id="search" name="keyword" autocomplete="off" data-search-config="{'defaultWords':[{'Key':'小米9','Rst':22},{'Key':'Redmi&nbsp;K20&nbsp;Pro','Rst':4},{'Key':'Redmi&nbsp;K20','Rst':10},{'Key':'Redmi&nbsp;Note&nbsp;7','Rst':7},{'Key':'Redmi&nbsp;Note&nbsp;7&nbsp;Pro','Rst':1},{'Key':'小米电视4C','Rst':10},{'Key':'电视32英寸','Rst':5},{'Key':'笔记本pro','Rst':6},{'Key':'小爱音箱','Rst':5},{'Key':'净水器','Rst':16}]}" />
+       <button type="button" style="width: 50px;height: 50px" id="searchbutton"><i class="layui-icon layui-icon-search" style="font-size: 20px" ></i>   </button>
+
+   </div>
+   <div class="site-header-drop">
+       <div>
+           <img src="img/1563276870.png">
+       </div>
+   </div>
+     <div class="content" id="content">
+       <div class="content_left">
+           <div class="content_left_content">
+           <ul>
+               <a href=""> <li id="1">手机 电话卡<div style="float: right">&rbbrk;</div></li> </a>
+               <a href=""> <li id="2">电视 盒子 <div style="float: right">&rbbrk;</div> </li></a>
+               <a href=""><li id="3">笔记本 平板 <div style="float: right">&rbbrk;</div>
+                 <div class="content_left_content_right"></div></a>
+               </li>
+               <a href=""><li id="4">家电 插线板  <div style="float: right">&rbbrk;</div></li></a>
+               <a href=""><li id="5">出行 穿戴  <div style="float: right">&rbbrk;</div> </li></a>
+               <a href=""><li id="6">智能 路由器  <div style="float: right">&rbbrk;</div> </li></a>
+               <a href=""><li id="7">电源 配件  <div style="float: right">&rbbrk;</div> </li></a>
+               <a href=""><li id="8">健康 儿童 <div style="float: right">&rbbrk;</div>  </li></a>
+               <a href=""><li id="9">耳机 音响 <div style="float: right"> &rbbrk;</div> </li></a>
+               <a href=""><li id="10">生活 箱包  <div style="float: right">&rbbrk;</div> </li></a>
+           </ul>
+           </div>
+       </div>
+
+       <div class="hide" id="hide">
+
+           <div class=" hide_subl"></div>
+           <!--<div class=" hide_subl"></div>-->
+           <!--<div class=" hide_subl"></div>-->
+           <!--<div class=" hide_subl"></div>-->
+
+
+       </div>
+       <!--<button id="next_img"><div class="next_img" >&gt;</div></button>-->
+       <!--<button id="up_img"><div class="up_img" >&lt;</div></button>-->
+
+       <div class="content_right">
+           <div class="content_right_top"></div>
+           <div class="content_right_bottom">
+               <input type="button" value="" class="button"/>
+               <input type="button" value="" class="button"/>
+               <input type="button" value="" class="button"/>
+               <input type="button" value="" class="button"/>
+               <input type="button" value="" class="button"/>
+
+
+           <!--<ul>-->
+               <!--<a href="" onclick="changeimg()"><li>○</li></a>-->
+               <!--<a href=""><li>○</li></a>-->
+               <!--<a href=""><li>○</li></a>-->
+               <!--<a href=""><li>○</li></a>-->
+               <!--<a href=""><li>○</li></a>-->
+           <!--</ul>-->
+           </div>
+
+       </div>
+   </div>
+   <div class="box_sub">
+       <div class="box_sub1_title">
+           <span>手机</span>
+           <span style="float: right">查看全部</span>
+       </div>
+       <div class="box_sub1_content">
+           <div class="box_sub1_content_right">
+               <!--<div class="item">-->
+               <!--<img src="https://i1.mifile.cn/a1/pms_1550642182.7527088!220x220.jpg" width="160px">-->
+               <!--<p>小米9</p>-->
+               <!--<p>骁龙</p>-->
+               <!--<p>5446元</p>-->
+               <!--</div>-->
+
+
+
+
+           </div>
+       </div>
+   </div>
+   <div class="box_sub">
+       <div class="box_sub1_title">
+           <span>为你推荐</span>
+           <span style="float: right">
+        <button type="button" id="retreat" style="color:#ECE7E3;">&#60;</button>
+        <button type="button" id="advance" style="color: #B0B1B6">&gt;</button>
+    </span>
+       </div>
+       <div class="recommend">
+           <!--<div class="recommend_item"></div>-->
+           <!--<div class="recommend_item"></div>-->
+           <!--<div class="recommend_item"></div>-->
+           <!--<div class="recommend_item"></div>-->
+           <!--<div class="recommend_item"></div>-->
+       </div>
+   </div>
+</body>
+<script src="../js/common.js"></script>
+<script>
+
+    var content_left_subobj = document.querySelectorAll(".content_left_content li")
+    var buttonobj = document.getElementsByClassName("button")
+    var content_bgobj = document.getElementById("content")
+    var hideobj = document.getElementById("hide")
+    var next_imgobj=document.getElementById("next_img")
+    var up_imgobj=document.getElementById("up_img")
+    var urlpath=["url('img/1l.jpg')","url('img/2.jpg')","url('img/3.jpg')","url('img/4.jpg')","url('img/5.jpg')"]
+    var hide_subls= document.getElementsByClassName(".hide_subl")
+    console.log(buttonobj)
+    var c=0;
+
+//轮播
+    buttonobj[0].style.backgroundColor="white"
+    setInterval(function() {
+        c++
+        if (c==5){
+            c=0;
+        }
+        content_bgobj.style.backgroundImage=urlpath[c]
+        button_color_click(c);
+    }, 3000);
+    // next_imgobj.onclick=function(){
+    //
+    //     c++;
+    //     if (c==5){
+    //         c=0;
+    //
+    //     }
+    //     content_bgobj.style.backgroundImage=urlpath[c]
+    //     button_color_click(c);
+    //
+    // }
+    // up_imgobj.onclick=function(){
+    //     c--;
+    //     if (c==-1){
+    //         c=4;
+    //
+    //     }
+    //     content_bgobj.style.backgroundImage=urlpath[c]
+    //     button_color_click(c);
+    //
+    // }
+    // for (let i =0;i<content_left_subobj.length;i++){
+    //         content_left_subobj[i].onmouseover=function () {
+    //
+    //                   this.style.backgroundColor="#FF6700";
+    //                   hideobj.style.display="inline-block"
+    //
+    //         }
+    //     content_left_subobj[i].onmouseout=function () {
+    //         this.style.backgroundColor=""
+    //         hideobj.style.display="none"
+    //     }
+    // }
+    function button_color_click(j){
+        c=j
+        content_bgobj.style.backgroundImage=urlpath[j]
+        for (let k=0;k<buttonobj.length;k++){
+            if (j==k){
+                buttonobj[k].style.backgroundColor="white"
+                buttonobj[k].setAttribute("index",0)
+
+            }else{
+                buttonobj[k].style.backgroundColor=""
+               buttonobj[k].setAttribute("index",1)
+            }
+
+        }
+    }
+    hideobj.onmouseover=function(){
+        this.style.display="inline-block"
+    }
+    hideobj.onmouseout=function(){
+        this.style.display="none"
+    }
+    for (let j=0;j<buttonobj.length;j++){
+        buttonobj[j].onclick=function(){
+            button_color_click(j);
+            //     content_bgobj.style.backgroundImage=urlpath[j]
+            // for (let k=0;k<buttonobj.length;k++){
+            //     if (j==k){
+            //         buttonobj[k].style.backgroundColor="white"
+            //     }else{
+            //         buttonobj[k].style.backgroundColor=""
+            //     }
+            //
+            // }
+
+
+
+        }
+        //切换图片时切换按钮的颜色
+
+     buttonobj[j].onmouseover=function () {
+         this.style.backgroundColor="#ECE8E5"
+
+
+     }
+        buttonobj[j].onmouseout=function () {
+            var color = this.style.backgroundColor;
+            if (this.getAttribute("index")==1 ){
+                this.style.backgroundColor=""
+            }
+
+        }
+
+    }
+
+    //滑到上方二级联动
+    for (let i =0;i<content_left_subobj.length;i++){
+        content_left_subobj[i].onmouseover=function () {
+            $("#hide").html("<div class=\" hide_subl\"></div>")
+            this.style.backgroundColor="#FF6700";
+            console.log(1)
+            console.log(this.id)
+            req(this.id)
+
+        }
+
+        content_left_subobj[i].onmouseout=function () {
+
+            this.style.backgroundColor=""
+            hideobj.style.display="none"
+            // $("#hide").removeClass("hide-sub")
+        }
+    }
+
+    function req(id) {
+        $.ajax({
+            url: API_PREFIX + "good",
+            type: "get",
+            dataType: "json",
+            success: function (json) {
+
+                console.log(json)
+
+                // var realData = json.data;
+                // console.log(realData)
+                console.log(json[1])
+                loadList(json,id)
+
+            },
+            error: function (xhr) {
+
+            }
+
+
+        })
+    }
+
+    function loadList(realData,id) {
+        var realdatalist = realData;
+        var c=0;
+        var i=0;
+        $.each(realdatalist,function (index,realdataobj) {
+            console.log(realdataobj.url)
+            if(c==6) {
+                c = 0
+                 i++
+                var hidesub1 = `<div class=" hide_subl"></div>`
+                $("#hide").append(hidesub1)
+            }
+
+            if ( id == realdataobj.classify) {
+                console.log(5555)
+
+                    var html = `   <div class=" hide_sub"><img src="${realdataobj.url}" width="30px">
+   <span style="color: red;padding-left: 50px">${realdataobj.describe}</span></div>`
+
+                    hideobj.style.display = "inline-block"
+                    $(".hide_subl").eq(i).append(html)
+                    c++
+                }
+
+
+        })
+
+
+    }
+
+    //下方第一个展示的数据  AJAX获取
+    $.ajax({
+        url: API_PREFIX + "good",
+        type: "post",
+        dataType: "json",
+        success:function (json) {
+
+            console.log(json)
+            phonereq(json)
+        }
+
+    })
+    function phonereq(json) {
+        $.each(json,function (index,obj) {
+            if (obj.classify==1){
+                var html
+                if (index == 9) {
+
+                    //最后一个格子的样式确定出来
+                    html = `<div class="item" style="background-color:#F9F9F9">
+                                        <div class="item_top" style="background-color: white;width: 180px">
+                                        <div style="display: inline-block"><img src="${obj.url}" alt=""></div>
+                                        <div style="display: inline-block"><p class="title">${obj.describe}</p>
+                                            <p class="price">${obj.price}</p></div>
+
+
+                                        </div>
+                                        <div class="eachPart" style="background-color: white;height: 120px;padding-top: 20px">
+                                           浏览更多，热门
+                                        </div>
+                                    </div>`;
+                }else {
+                    html = `<div class="item">
+                <img src="${obj.url}" width="160px">
+                <p>${obj.describe}</p>
+                <p>${obj.describe}</p>
+                <p>${obj.price}元</p>
+            </div>`
+                }
+                $(".box_sub1_content_right").append(html)
+            }
+        })
+    }
+
+    //推荐数据获取
+    var u=5;
+    //初始化
+    recommend()
+    function recommend() {
+        $.ajax({
+            url: API_PREFIX + "api/rec",
+            type: "post",
+            dataType: "json",
+            success:function (json) {
+                console.log(456666666666666666666666666)
+                console.log(json)
+                var data = json.data
+
+                        recommendreq(u,data)
+
+
+
+
+            }
+        })
+    }
+    //向又滑动
+    $("#advance").click(function () {
+
+        if ((u+5)<=15) {
+
+
+
+            $(".recommend").html("")
+            u=u+5;
+            recommend()
+            $("#retreat").css("color","#B0B1B6")
+        }
+        if (u==15){
+            $(this).css("color","#ECE7E3")
+        }
+
+
+
+
+
+    })
+    //向左滑动
+    $("#retreat").click(function () {
+        $(this).css("color","#ECE7E3")
+        if (u>5){
+            $(".recommend").html("")
+            u=u-5;
+            recommend()
+            if ((u-5)<=20){
+                $("#advance").css("color","#B0B1B6")
+            }
+        }
+
+
+
+
+    })
+    function recommendreq(u,data) {
+        $.each(data,function (index,obj) {
+            if (index>(u-5-1) && index<=u-1) {
+                var html = `<div class="recommend_item">
+           <img src="${obj.url}" width="160px">
+                <p>${obj.describe}</p>
+                <p>${obj.describe}</p>
+                <p>${obj.price}元</p>
+</div>`
+                $(".recommend").append(html)
+            }
+        })
+    }
+
+
+    //创建搜索按钮的AJAX
+    $("#searchbutton").click(function () {
+        if ($("#search").val() !="") {
+            var url = "http://localhost:13082/XiaoMi/html/查询页面.html?keyword=" + $("#search").val()
+            window.location.href = url
+        }
+    })
+
+
+
+
+
+
+</script>
+</html>

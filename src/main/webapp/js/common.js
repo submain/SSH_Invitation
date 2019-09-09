@@ -1,0 +1,1 @@
+const API_PREFIX = "http://localhost:10086/XiaoMi/";

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--1.加载db.properties-->
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+    <!--2.dataSource-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${db_driver}"></property>
+        <property name="url" value="${db_url}"></property>
+        <property name="password" value="${db_password}"></property>
+        <property name="username" value="${db_username}"></property>
+    </bean>
+    <!--3.sessionFactoryBean:用来生成sessionFactory-->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+
+        <!--hibernate属性-->
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="current_session_context_class">thread</prop>
+            </props>
+        </property>
+        <!--hibernate的映射关系-->
+        <!--<property name="mappingLocations" value="classpath:model/*.hbm.xml"></property>-->
+        <property name="packagesToScan" value="model"></property>
+    </bean>
+
+    <!--4.txManager事务处理-->
+    <bean id="txManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+    <!--5.注解事务-->
+    <tx:annotation-driven transaction-manager="txManager"></tx:annotation-driven>
+
+    <!--6.service,dao组件扫描-->
+    <context:component-scan base-package="service,dao"></context:component-scan>
+
+    <!--7.HibernateTemplate-->
+    <bean id="temp" class="org.springframework.orm.hibernate5.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    </beans>

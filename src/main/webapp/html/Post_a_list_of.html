@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>帖子列表</title>
+    <style>
+        .content{
+            width: 1226px;
+            height: 300px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        td{
+            width:300px;
+            height: 20px;
+            text-align: center;
+        }
+        #title_little td{
+            background-color: #84C1FF;
+        }
+    </style>
+    <script src="../jquery/jquery.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+   <div class="content">
+
+       <table cellpadding="0" cellspacing="0" border="1px">
+           <thead>
+           <tr>
+               <th colspan="5" style="text-align: center;height: 60px;font-size: 35px">帖子列表</th>
+
+
+
+           </tr>
+           <tr>
+               <td colspan="5">帖子标题：<input type="text" name="titlename" id="searchkey" >
+                   <input type="submit" value="搜索" id="search">
+               </td>
+
+
+
+           </tr>
+           <tr id="title_little">
+               <td>标题</td>
+               <td>内容摘要</td>
+               <td>作者</td>
+               <td>发布时间</td>
+               <td>操作</td>
+
+
+           </tr>
+           </thead>
+
+           <tbody id="tbody">
+
+
+           <tr style="background-color: #8EFFFF">
+               <td>1313</td>
+               <td>3131</td>
+               <td>3131</td>
+               <td>3131</td>
+               <td>3131</td>
+
+
+           </tr>
+           <tr >
+               <td>1313</td>
+               <td>3131</td>
+               <td>3131</td>
+               <td>3131</td>
+               <td>3131</td>
+
+
+           </tr>
+
+           </tbody>
+
+       </table>
+       <div id="pagecontainer" style="margin: 0 auto;"></div>
+   </div>
+
+</body>
+<script src="../layui/layui.all.js"></script>
+<script>
+    var page = 1;
+    var pageSize = 8;
+
+    var laypage, layer;
+    // var $ = jQuery.jquery = layui.jquery
+
+    layui.use(['laypage', 'layer',"form"], function () {
+        laypage = layui.laypage
+            , layer = layui.layer,
+                  form = layui.form
+
+
+        //把此处的函数理解为入口函数
+
+        //实现模糊搜索功能
+        $("#search").click(function () {
+            page=1;
+            pageSize=8;
+            var key = $("#searchkey").val()
+            console.log(key)
+            if (key != null){
+                //ajax渲染
+             searchajaxreq(key)
+            }
+        })
+        ajaxGetGoodsListByPage();
+
+        form.on('submit(formDemo)', function(data){
+            layer.msg(JSON.stringify(data.field));
+            return false;
+
+
+        });
+    })
+    function searchajaxreq(key) {
+        ajaxGetGoodsListByKey(key)
+    }
+
+    function renderPageContainer(totalPage) {
+        laypage.render({
+            elem: 'pagecontainer'
+            , count: totalPage
+            , limit: pageSize
+            , curr: page
+            , limits: [4,8]
+            , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+            , jump: function (obj, first) {
+                //obj包含了当前分页的所有参数，比如：
+                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                console.log(obj.limit); //得到每页显示的条数
+
+                //首次不执行
+                if (!first) {
+
+                    //把分页值，和分页量（分页量可能会变化）
+                    page = obj.curr;
+                    pageSize = obj.limit;
+
+                    ajaxGetGoodsListByPage()
+                }
+            }
+        });
+    }
+    function ajaxGetGoodsListByKey(key) {
+        $.ajax({
+
+            url: "/Invitation/QueryInvitationByKeyword.show",
+            data: {
+                "search": key,
+                "cateId": "",
+                "orderKey": "price",
+                "orderValue": "desc",
+                "page": page,
+                "pageSiz": pageSize
+            },
+            type: "get",
+            dataType: "json",
+            success: function (json) {
+                console.log(json)
+                console.log(json.data)
+                renderPageContainer(json.count);
+                renderAjaxTable(json.data)
+
+            }, error: function (xhr) {
+
+            }
+
+        })
+    }
+
+    function ajaxGetGoodsListByPage() {
+        $.ajax({
+
+            url: "/Invitation/QueryInvitationOrderByTime.show",
+            data: {
+
+
+                "page": page,
+                "pageSiz": pageSize
+            },
+            type: "get",
+            dataType: "json",
+            success: function (json) {
+                console.log(json)
+                console.log(json.data)
+
+
+                renderPageContainer(json.count);
+                renderAjaxTable(json.data)
+
+            }, error: function (xhr) {
+
+            }
+
+        })
+    }
+
+
+    function renderAjaxTable(data) {
+        var html = "";
+        $("#tbody").html("")
+        $.each(data,function (index,obj) {
+            if (index %2==0) {
+                html = ` <tr style="background-color: #8EFFFF">
+                   <td>${obj.title}</td>
+               <td>${obj.summary}</td>
+               <td>${obj.author}</td>
+               <td>${obj.createdate}</td>
+               <td><span style="cursor:pointer" id="${obj.id}" class="Rreply">查看回复</span >||<span style="cursor:pointer" class="delete">删除</span></td>
+
+
+           </tr>`
+            }else {
+                html = ` <tr>
+                <td>${obj.title}</td>
+               <td>${obj.summary}</td>
+               <td>${obj.author}</td>
+               <td>${obj.createdate}</td>
+               <td><span style="cursor:pointer" id="${obj.id}" class="Rreply">查看回复</span >||<span style="cursor:pointer" class="delete">删除</span></td>
+           </tr>`
+            }
+
+            $("#tbody").append(html)
+            // $(".content_item").eq(index).click(function () {
+            //     ImageClick(obj.ID)
+            // })
+        })
+
+       $(".Rreply").click(function () {
+           var id = this.id
+           console.log(id)
+          window.location.href="/html/%E5%9B%9E%E5%A4%8D%E9%A1%B5%E9%9D%A2.html?id="+id
+       })
+        $(".delete").click(function () {
+            var valid = $(this).prev().attr("id")
+            console.log(valid)
+            if(confirm("确定删除此条信息？")) {
+                $(this).parent().parent().remove()
+                //删除数据库的信息
+                $.ajax({
+                    url: "/Invitation/Delete.show",
+                    data: {"valid": valid},
+                    type: "get",
+                    dataType: "json",
+                    success: function (json) {
+                         console.log(json)
+                        console.log("ssssssssssss")
+                        if (json.ok==1) {
+                            alert("删除成功")
+                            // window.location.href="/html/Post_a_list_of.html"
+                        }else {
+                            alert("删除失败")
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+
+
+</script>
+</html>
